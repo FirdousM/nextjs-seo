@@ -3,17 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import JsonLd from "@/components/JsonLd";
-import { getAllProducts, getProduct } from "@/lib/products";
+import { getProduct } from "@/lib/products";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
 import { breadcrumbSchema } from "@/lib/jsonld/breadcrumb";
 import { faqSchema } from "@/lib/jsonld/faq";
 import { productSchema } from "@/lib/jsonld/product";
 
 type Props = { params: Promise<{ slug: string }> };
-export async function generateStaticParams() {
-  const products = await getAllProducts();
-  return products.map((p) => ({ slug: p.slug }));
-}
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const product = await getProduct(slug);
